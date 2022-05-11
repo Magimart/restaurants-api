@@ -1,15 +1,4 @@
-import { Get, Controller } from '@nestjs/common';
-import { RestaurantsService } from './restaurants.service';
-import { Restaurant } from './schemas/restaurant.schema';
-
-
+import { Controller } from '@nestjs/common';
 
 @Controller('restaurants')
-export class RestaurantsController {
-    constructor(private restaurantsService: RestaurantsService) {}
-      
-    @Get()
-    async getAllRestaurants(): Promise<Restaurant[]> {
-      return this.restaurantsService.findAll();
-    }
-}
+export class RestaurantsController {}

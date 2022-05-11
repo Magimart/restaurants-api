@@ -2,6 +2,13 @@
 /dist
 /node_modules
 
+#configs
+configKeys.ts
+
+#personal notes
+/trash
+notes.text
+
 # Logs
 logs
 *.log
@@ -10,9 +17,6 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-#trash-notes
-note.txt
-
 
 # OS
 .DS_Store
