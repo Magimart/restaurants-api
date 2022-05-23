@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
@@ -23,4 +23,34 @@ export class RestaurantsService {
         const res = await this.restaurantModel.create(restaurant);
         return res;
     }
+
+
+    //find restaurant byId get => restaurant/:id
+    async findByID(id: string,): Promise<Restaurant>{
+        const foundRestaurant = await this.restaurantModel.findById(id);
+        console.log(foundRestaurant)
+        if(!foundRestaurant){
+            // throw new NotFoundException('Restaurant not found.')
+            throw new HttpException({
+                status: HttpStatus.FORBIDDEN,
+                error: 'Restaurant not available',
+              }, HttpStatus.FORBIDDEN)
+        }
+        return foundRestaurant;
+    }
+
+        // let update the restaurant endpoints by Id -----> /restaurants/:id
+
+    async updateById(id: string, restaurant: Restaurant) {
+
+            return this.restaurantModel.findByIdAndUpdate(id, restaurant, {
+                new: true,
+                runValidators:true
+            })
+        }      
+     
+
 }
+
+
+
