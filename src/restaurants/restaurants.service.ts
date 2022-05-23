@@ -47,7 +47,14 @@ export class RestaurantsService {
                 new: true,
                 runValidators:true
             })
-        }      
+        } 
+        
+    //delete restaurant end point 
+    async deleteById(id: string): Promise<Restaurant> {
+        return await this.restaurantModel.findByIdAndDelete(id)
+       // return await this.restaurantModel.findByIdAndRemove(id)
+
+    }
      
 
 }
