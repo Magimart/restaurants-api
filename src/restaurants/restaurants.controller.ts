@@ -4,11 +4,9 @@ import { UpdateRestaurantDto } from './dto/update.restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { Restaurant } from './schemas/restaurant.schema';
 
-// import { Query as ExpressQuery} from 'express-serve-static-core';
+// import { Query as ExpressQuery} from '@types/express-serve-static-core';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 
-
- 
 
 @Controller('restaurants')
 export class RestaurantsController {

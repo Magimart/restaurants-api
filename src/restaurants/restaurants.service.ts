@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
 import { Restaurant } from './schemas/restaurant.schema';
-// import { Query } from  'express-serve-static-core';
+// import { Query } from  '@types/express-serve-static-core';
  import { Query } from  'express-serve-static-core';
 
 
@@ -17,7 +17,16 @@ export class RestaurantsService {
 
     // get all restaurants route
     async findAll(query: Query): Promise<Restaurant[]> {
-   
+
+        query && console.log(query)
+
+        //___pagination
+        const pageDefault = 2;
+        const responsePerPage = 2;
+        const isCurrentPage =   Number(query.page) || pageDefault;
+        const skip = responsePerPage * (isCurrentPage - 1);
+
+        //___search query
            const queryStringKeyword = query.keyword ? {
                name: {
                    $regex: query.keyword,
@@ -28,6 +37,10 @@ export class RestaurantsService {
            console.log(queryStringKeyword)
 
         const foundRestaurants = await this.restaurantModel.find({...queryStringKeyword})
+                                                            //limit page results
+                                                            .limit(responsePerPage)
+                                                            .skip(skip)
+
         console.log(foundRestaurants)
             return foundRestaurants;       
     }
@@ -67,7 +80,6 @@ export class RestaurantsService {
     async deleteById(id: string): Promise<Restaurant> {
         return await this.restaurantModel.findByIdAndDelete(id)
        // return await this.restaurantModel.findByIdAndRemove(id)
-
     }
      
 
