@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Delete, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update.restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
@@ -15,6 +15,7 @@ export class RestaurantsController {
 
   //get all resttuarants
    @Get() 
+   // @UsePipes(ValidationPipe) let make it global and inject it at the apps main entry
     async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]>{
         return this.restaurantsService.findAll(query)
     }
