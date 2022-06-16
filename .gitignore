@@ -4,6 +4,7 @@
 
 #configs
 configKeys.ts
+.env.development
 
 #personal notes
 /trash

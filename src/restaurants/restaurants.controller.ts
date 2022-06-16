@@ -30,9 +30,10 @@ export class RestaurantsController {
     @Get(":id")
     async getRestaurantByID(
         @Param("id")
-         id:string): Promise<Restaurant>{
-             console.log(id)
-            return this.restaurantsService.findByID(id)
+         id:string, ): Promise<Restaurant>{
+            let foundRestaurant = this.restaurantsService.findByID(id)
+            // console.log(foundRestaurant)
+            return foundRestaurant;
         }
         
     @Put(":id")
@@ -45,7 +46,6 @@ export class RestaurantsController {
                          return this.restaurantsService.updateById(id, restaurant)
     }
 
-
     @Delete(":id")
     async deleteRestaurant(
         @Param("id") id:string,
@@ -55,7 +55,6 @@ export class RestaurantsController {
                   const restaurant = this.restaurantsService.deleteById(id)
                   if(restaurant){
                       let restaurantname = this.restaurantsService
-                      console.log(restaurantname)
                       return {
                           deleted: true,
                           message: `success, the restaurant has been deleted` 

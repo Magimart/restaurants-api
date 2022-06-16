@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
 import { Restaurant } from './schemas/restaurant.schema';
 // import { Query } from  '@types/express-serve-static-core';
  import { Query } from  'express-serve-static-core';
+import GeoApiFeatures from '../utils/geoFeatures.utils';
 
 
 @Injectable()
@@ -34,19 +35,23 @@ export class RestaurantsService {
                }
            }:{}
 
-           console.log(queryStringKeyword)
 
         const foundRestaurants = await this.restaurantModel.find({...queryStringKeyword})
                                                             //limit page results
                                                             .limit(responsePerPage)
                                                             .skip(skip)
 
-        console.log(foundRestaurants)
             return foundRestaurants;       
     }
 
     // create restaurant
     async create(restaurant: Restaurant): Promise<Restaurant>{
+
+         const restaurantLocation = await GeoApiFeatures.getRestaurantLocation(restaurant.address)
+
+         console.log("restooooooooooooooooooooo")
+         console.log(restaurantLocation)
+
         const res = await this.restaurantModel.create(restaurant);
         return res;
     }
@@ -54,14 +59,20 @@ export class RestaurantsService {
 
     //find restaurant byId get => restaurant/:id
     async findByID(id: string,): Promise<Restaurant>{
+
+        const isValidParamId = mongoose.isValidObjectId(id)
+        if(!isValidParamId){
+            throw new BadRequestException("you have provided wrong id, Kindly make sure the Id is correct")
+        }
+
         const foundRestaurant = await this.restaurantModel.findById(id);
-        // console.log(foundRestaurant)
+        foundRestaurant && console.log(foundRestaurant._id)
+        console.log(foundRestaurant)
+
         if(!foundRestaurant){
             // throw new NotFoundException('Restaurant not found.')
-            throw new HttpException({
-                status: HttpStatus.FORBIDDEN,
-                error: 'Restaurant not available',
-              }, HttpStatus.FORBIDDEN)
+               throw new NotFoundException('this Restaurant not found available',
+            )
         }
         return foundRestaurant;
     }
