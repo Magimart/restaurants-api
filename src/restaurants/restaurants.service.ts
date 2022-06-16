@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-
 import { Restaurant } from './schemas/restaurant.schema';
-// import { Query } from  '@types/express-serve-static-core';
  import { Query } from  'express-serve-static-core';
 import GeoApiFeatures from '../utils/geoFeatures.utils';
 
@@ -15,12 +13,10 @@ export class RestaurantsService {
         private restaurantModel: mongoose.Model<Restaurant>
     ){}
 
-
     // get all restaurants route
     async findAll(query: Query): Promise<Restaurant[]> {
 
-        query && console.log(query)
-
+        // query && console.log(query)
         //___pagination
         const pageDefault = 2;
         const responsePerPage = 2;
@@ -45,14 +41,21 @@ export class RestaurantsService {
     }
 
     // create restaurant
-    async create(restaurant: Restaurant): Promise<Restaurant>{
+    async createNewRestaurant(restaurant: Restaurant): Promise<Restaurant>{
+
 
          const restaurantLocation = await GeoApiFeatures.getRestaurantLocation(restaurant.address)
 
-         console.log("restooooooooooooooooooooo")
+         console.log("here is the loc to be created---------xx")
          console.log(restaurantLocation)
 
-        const res = await this.restaurantModel.create(restaurant);
+        const addRestaurantWithLoc = Object.assign(restaurant, restaurantLocation)
+
+        const res = await this.restaurantModel.create(addRestaurantWithLoc);
+       
+        console.log("here is the created res--------------xx")
+        console.log(res)
+       
         return res;
     }
 

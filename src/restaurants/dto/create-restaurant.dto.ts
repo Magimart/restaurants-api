@@ -37,6 +37,10 @@ export class CreateRestaurantDto {
   @IsOptional()
   @IsEnum(Category, {message: "kindly enter the correct specified categories"})
   readonly category: Category
+
+  // @IsNotEmpty()
+  // @IsString()
+
   
   readonly imagesOfRestaurant?: object[]
 

@@ -3,8 +3,6 @@ import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update.restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { Restaurant } from './schemas/restaurant.schema';
-
-// import { Query as ExpressQuery} from '@types/express-serve-static-core';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 
 
@@ -24,7 +22,7 @@ export class RestaurantsController {
     @Post()
     async createRestaurant(
           @Body() restaurant: CreateRestaurantDto): Promise <Restaurant>{
-                     return this.restaurantsService.create(restaurant)
+                     return this.restaurantsService.createNewRestaurant(restaurant)
     }
     //get restaurant by id
     @Get(":id")

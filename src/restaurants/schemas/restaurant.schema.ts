@@ -1,5 +1,22 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 
+
+@Schema()
+export class Location{
+    
+      @Prop({type: String, enum: ['Point']})
+      type: string
+      @Prop({index: '2dsphere'})
+      coordinates: Number[]
+      formattedAddress: string
+      city:string
+      state: string
+      zipCode: string
+      country: string
+}
+
+
+
 export enum Category {
      FAST_FOODS = "Fast Foods",
      CAFE = "Cafe",
@@ -31,8 +48,10 @@ export class Restaurant {
     @Prop()
     imagesOfRestaurant?: object[]
 
-    // @Prop()
-    // user: string
+    @Prop({type: Object, ref: 'Location'})
+        location?: Location
+       //location: Location
+
 }
 
 
