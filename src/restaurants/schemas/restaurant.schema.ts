@@ -49,8 +49,8 @@ export class Restaurant {
     imagesOfRestaurant?: object[]
 
     @Prop({type: Object, ref: 'Location'})
-        location?: Location
-       //location: Location
+          location?: Location
+    //    location: Location
 
 }
 

@@ -44,16 +44,18 @@ export class RestaurantsService {
     async createNewRestaurant(restaurant: Restaurant): Promise<Restaurant>{
 
 
-         const restaurantLocation = await GeoApiFeatures.getRestaurantLocation(restaurant.address)
+        // restaurantLocation         
+        const restaurantLocation  = await GeoApiFeatures.Location(restaurant.address)
+         console.log("here is the loc to be created---lll------xx")
+         console.log(restaurantLocation )
 
-         console.log("here is the loc to be created---------xx")
-         console.log(restaurantLocation)
-
-        const addRestaurantWithLoc = Object.assign(restaurant, restaurantLocation)
+        const addRestaurantWithLoc = Object.assign(restaurant, {restaurantLocation })
 
         const res = await this.restaurantModel.create(addRestaurantWithLoc);
-       
+    
         console.log("here is the created res--------------xx")
+        console.log(addRestaurantWithLoc)
+
         console.log(res)
        
         return res;

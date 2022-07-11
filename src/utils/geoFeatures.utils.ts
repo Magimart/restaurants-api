@@ -4,7 +4,7 @@ const NodeGeoCoder = require("node-geocoder");
 
 export default class GeoApiFeatures{
 
-    static async getRestaurantLocation(address) {
+    static async Location(address) {
 
     try {
 
@@ -32,9 +32,7 @@ export default class GeoApiFeatures{
                     country: loc[0].countryCode
                     
                 }
-
                 //    console.log(location)
-
             return location;
 
 
